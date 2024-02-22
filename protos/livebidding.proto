@@ -1,0 +1,92 @@
+syntax = "proto3";
+option csharp_namespace = "BidRight.Api.Protos";
+import "google/protobuf/timestamp.proto";
+package auction;
+service AuctionSubscriptionGrpcService {
+    rpc Subscribe(SubscriptionRequest) returns (stream Auction) {}
+    rpc Publish (Auction) returns (stream Auction) {}
+}
+message Lot {
+    int64 id = 1;
+    google.protobuf.Timestamp startedTime = 2;
+    google.protobuf.Timestamp stopTime = 3;
+    google.protobuf.Timestamp stoppedTime = 4;
+    Winner winner = 5;
+    int64 nextId = 6;
+}
+message Winner {
+    int64 id = 1;
+    Bid bid = 2;
+    string paddleNumber = 3;
+    google.protobuf.Timestamp createdDate = 4;
+}
+message Bid {
+    int64 id = 1;
+    double amount = 2;
+    google.protobuf.Timestamp createdDate = 3;
+}
+message Bidder {
+    int64 id = 1;
+    string userName = 2;
+    string paddleNumber = 3;
+    Bid bid = 4;
+}
+message LastBid {
+    int64 lotId = 1;
+    double amount = 2;
+}
+message BidderList {
+    int64 id = 1;
+    string paddleNumber = 2;
+    string firstName = 3;
+    string lastName = 4;
+    string userName = 5;
+    double maxBidAmount = 6;
+    google.protobuf.Timestamp enteredDate = 7;
+    google.protobuf.Timestamp leftDate = 8;
+    LastBid lastBid = 9;
+    repeated LastBid Wins = 10;
+}
+message Auction {
+    int64 id = 1;
+    Lot lot = 2;
+    Bidder bidder = 3;
+    repeated BidderList bidders = 4;
+    enum Event {
+        CONNECT = 0;
+        BIDDER_JOINED = 1;
+        BIDDER_LEFT = 2;
+        LOT_STARTED = 3;
+        BID_PLACED = 4;
+        LOT_STOPPED = 5;
+        LOT_STOPPING = 6;
+        STOPPING_CANCELLED = 7;
+        CHANGE_AMOUNT = 8;
+        ERROR = 9;
+        DISCONNECT = 10;
+        KICK = 11;
+        BID_PRIOR = 12;
+    }
+    Event event = 5;
+    string errorMsg = 6;
+    repeated Bidder priorBids = 7;
+}
+message SubscriptionRequestItem {
+    int64 id = 1;
+    double amount = 2;
+    google.protobuf.Timestamp lastBidDate = 3;
+    enum Type {
+        Online = 0;
+        InPerson = 1;
+    }
+    Type type = 4;
+}
+message SubscriptionRequest {
+    repeated SubscriptionRequestItem lots = 1;
+    enum Role {
+        BIDDER = 0;
+        AUCTIONEER = 1;
+        PRESENTER = 2;
+    }
+    Role role = 2;
+}

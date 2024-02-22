@@ -1,0 +1,4 @@
+pubspec.lock text eol=lf
+*.g.dart text eol=lf
+*.freezed.dart text eol=lf
+lib/generated/**/*.dart text eol=lf
