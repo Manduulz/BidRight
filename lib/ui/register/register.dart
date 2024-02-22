@@ -39,6 +39,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _buttonKey = GlobalKey();
 
   final phoneController = MaskedTextController(mask: '(000) 000-0000');
+  String? dateOfBirthError;
 
   @override
   void initState() {
@@ -129,7 +130,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 labelText: 'Phone number',
                 controller: phoneController,
                 focusNode: _phoneFocus,
-                  // inputFormatters: [phoneFormatter],
+                // inputFormatters: [phoneFormatter],
                 keyboardType: TextInputType.phone,
                 autofillHints: const [AutofillHints.telephoneNumberNational],
                 onChanged: bloc.setPhone,
@@ -144,7 +145,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 onTap: _showDatePicker,
                 child: InputDecorator(
                   decoration: (state.dateOfBirth == null
-                          ? const InputDecoration()
+                          ? InputDecoration(errorText: dateOfBirthError)
                           : filledInputDecoration)
                       .copyWith(labelText: 'Date of birth'),
                   isEmpty: state.dateOfBirth == null,
@@ -215,6 +216,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   void _showNextScreen() {
     if (!_formKey.currentState!.validate()) {
+      if (context.read<RegistrationCubit>().getDateOfBirth == null) {
+        setState(() {
+          dateOfBirthError = 'Date of birth required';
+        });
+      }
+      return;
+    }
+
+    if (context.read<RegistrationCubit>().getDateOfBirth == null) {
+      setState(() {
+        dateOfBirthError = 'Date of birth required';
+      });
       return;
     }
 
@@ -538,6 +551,7 @@ class RegistrationCompleteScreen extends StatelessWidget {
                 //     fit: BoxFit.contain,
                 //   ),
                 // ),
+                const SizedBox(height: 10),
                 Container(
                   alignment: Alignment.center,
                   child: const Text(

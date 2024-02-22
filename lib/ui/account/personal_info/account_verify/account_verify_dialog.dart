@@ -73,9 +73,19 @@ class _AccountVerifyStep1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accounts =
-        context.select<AccountVerifyCubit, LoadingState<List<AccountLink>>>(
-            (value) => value.state.accounts);
+    LoadingState<List<AccountLink>> accounts;
+
+    try {
+      accounts = context
+          .select<AccountVerifyCubit, LoadingState<List<AccountLink>>>(
+              (value) => value.state.accounts)
+          .maybeWhen(orElse: () {
+        return const Loaded([]);
+      });
+    } catch (e) {
+      accounts = const Loaded([]);
+    }
+
     return accounts.map(
         uninitialized: (_) => const SizedBox.shrink(),
         loading: (_) => const Center(

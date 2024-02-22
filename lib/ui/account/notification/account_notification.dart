@@ -16,7 +16,8 @@ class AccountNotificationScreen extends StatefulWidget {
   const AccountNotificationScreen({Key? key}) : super(key: key);
 
   @override
-  State<AccountNotificationScreen> createState() => _AccountNotificationScreenState();
+  State<AccountNotificationScreen> createState() =>
+      _AccountNotificationScreenState();
 }
 
 class _AccountNotificationScreenState extends State<AccountNotificationScreen> {

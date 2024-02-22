@@ -10,7 +10,8 @@ import 'package:bid_right_mobile/util/string_extension.dart';
 import 'package:bloc/bloc.dart';
 import 'package:email_validator/email_validator.dart';
 
-class RegistrationCubit extends Cubit<RegistrationState> implements AddressInputDelegate {
+class RegistrationCubit extends Cubit<RegistrationState>
+    implements AddressInputDelegate {
   final LoginApi _api;
 
   RegistrationCubit(this._api) : super(const RegistrationState());
@@ -27,6 +28,8 @@ class RegistrationCubit extends Cubit<RegistrationState> implements AddressInput
   }
 
   void setPhone(String phone) => emit(state.copyWith(phone: phone));
+
+  DateTime? get getDateOfBirth => state.dateOfBirth;
 
   void setDateOfBirth(DateTime dateOfBirth) {
     emit(state.copyWith(
@@ -45,7 +48,8 @@ class RegistrationCubit extends Cubit<RegistrationState> implements AddressInput
 
   @override
   void setAddress2(String address2) {
-    emit(state.copyWith.address(streetLine2: address2.isEmpty ? null : address2));
+    emit(state.copyWith
+        .address(streetLine2: address2.isEmpty ? null : address2));
   }
 
   @override
