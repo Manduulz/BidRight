@@ -14,7 +14,7 @@ class RegistrationCubit extends Cubit<RegistrationState>
     implements AddressInputDelegate {
   final LoginApi _api;
 
-  RegistrationCubit(this._api) : super(const RegistrationState());
+  RegistrationCubit(this._api) : super(RegistrationState());
 
   void setFirstName(String firstName) =>
       emit(state.copyWith(firstName: firstName));
