@@ -21,10 +21,10 @@ dependencies:
   equatable: ^2.0.5
   expandable_page_view: ^1.0.17
   extended_masked_text: ^2.3.1
-  firebase_analytics: ^10.1.1
-  firebase_core: ^2.7.0
-  firebase_crashlytics: ^3.0.12
-  firebase_messaging: ^14.2.5
+  firebase_analytics: ^10.8.6
+  firebase_core: ^2.25.4
+  firebase_crashlytics: ^3.4.15
+  firebase_messaging: ^14.7.16
   fixnum: ^1.0.0
   flutter_app_badger:
     git:
