@@ -131,14 +131,8 @@ class AccountRepository {
   }
 
   Future<void> loadLinkedAccounts() async {
-    try {
-      final result = await _api.getLinkedAccounts();
-      result.join(
-          onSuccess: _linkedAccountsSubject.add,
-          onFailure: (_) => _linkedAccountsSubject.add([]));
-    } catch (e) {
-      _linkedAccountsSubject.add([]);
-    }
+    final result = await _api.getLinkedAccounts();
+    result.join(onSuccess: _linkedAccountsSubject.add, onFailure: (_) {});
   }
 
   Future<void> linkAccount() async {
