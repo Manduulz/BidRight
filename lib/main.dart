@@ -158,6 +158,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+
       color: BRColors.bgDarkBlue,
       title: 'BidRight',
       theme: Constants.theme,
